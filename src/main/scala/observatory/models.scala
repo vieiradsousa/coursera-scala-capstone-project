@@ -1,5 +1,7 @@
 package observatory
 
+case class StationData(stn: String, latitude: Double, longitude: Double, year: Year, month: Int, day: Int, fahrenheit: Temperature)
+
 /**
   * Introduced in Week 1. Represents a location on the globe.
   *
@@ -7,8 +9,6 @@ package observatory
   * @param lon Degrees of longitude, -180 ≤ lon ≤ 180
   */
 case class Location(lat: Double, lon: Double)
-
-case class StationData(stn: String, latitude: Double, longitude: Double, year: Year, month: Int, day: Int, fahrenheit: Temperature)
 
 /**
   * Introduced in Week 3. Represents a tiled web map tile.

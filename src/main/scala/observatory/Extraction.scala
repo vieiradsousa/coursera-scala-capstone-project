@@ -39,16 +39,15 @@ object Extraction extends ExtractionInterface {
     * @return A sequence containing triplets (date, location, temperature)
     */
   def locateTemperatures(year: Year, stationsFile: String, temperaturesFile: String): Iterable[(LocalDate, Location, Temperature)] = {
-    val stations     = readStations(stationsFile)
-    val temperatures = readTemperatures(temperaturesFile)
+    val stations     = readStations(stationsFile).cache()
+    val temperatures = readTemperatures(temperaturesFile).cache()
 
-    val stationsTemperatures = stations
+    stations
       .join(temperatures, Seq("STN", "WBAN"))
       .withColumn("YEAR", lit(year))
       .as[StationData]
       .collect()
-
-    stationsTemperatures.map(dateLocationTemperature(_))
+      .map(dateLocationTemperature(_))
   }
 
   /**
