@@ -4,7 +4,7 @@ import com.sksamuel.scrimage.{Pixel, RGBColor}
 import observatory.Visualization.interpolateColor
 import observatory.{Color, Location, Visualization}
 
-object ImagePixels {
+object ImagePixel {
 
   def get(temperatures: Iterable[(Location, Double)], colors: Iterable[(Double, Color)]): Array[Pixel] = {
     (0 until (360 * 180))

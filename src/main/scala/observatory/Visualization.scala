@@ -1,7 +1,7 @@
 package observatory
 
 import com.sksamuel.scrimage.{Image, Pixel}
-import utils.{ImagePixels, LinearInterpolation, SpatialInterpolation}
+import utils.{ImagePixel, LinearInterpolation, SpatialInterpolation}
 
 /**
   * 2nd milestone: basic visualization
@@ -36,7 +36,7 @@ object Visualization extends VisualizationInterface {
     * @return A 360×180 image where each pixel shows the predicted temperature at its location
     */
   def visualize(temperatures: Iterable[(Location, Temperature)], colors: Iterable[(Temperature, Color)]): Image = {
-    val pixels: Array[Pixel] = ImagePixels.get(temperatures, colors)
+    val pixels: Array[Pixel] = ImagePixel.get(temperatures, colors)
     Image(IMAGE_WIDTH, IMAGE_HEIGHT, pixels)
   }
 
