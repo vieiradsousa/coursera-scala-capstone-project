@@ -1,5 +1,7 @@
 package observatory
 
+import utils.Grid
+
 /**
   * 4th milestone: value-added information
   */
@@ -11,7 +13,8 @@ object Manipulation extends ManipulationInterface {
     *         returns the predicted temperature at this location
     */
   def makeGrid(temperatures: Iterable[(Location, Temperature)]): GridLocation => Temperature = {
-    ???
+    val grid = gridSetup(temperatures)
+    (gl: GridLocation) => grid.getTemperature(grid.getIndex(gl.lat, gl.lon))
   }
 
   /**
@@ -20,7 +23,8 @@ object Manipulation extends ManipulationInterface {
     * @return A function that, given a latitude and a longitude, returns the average temperature at this location
     */
   def average(temperaturess: Iterable[Iterable[(Location, Temperature)]]): GridLocation => Temperature = {
-    ???
+    val grid = temperaturess map(gridSetup(_)) reduce((one, other) => one sum other) divide temperaturess.size
+    (gl: GridLocation) => grid.getTemperature(grid.getIndex(gl.lat, gl.lon))
   }
 
   /**
@@ -29,9 +33,14 @@ object Manipulation extends ManipulationInterface {
     * @return A grid containing the deviations compared to the normal temperatures
     */
   def deviation(temperatures: Iterable[(Location, Temperature)], normals: GridLocation => Temperature): GridLocation => Temperature = {
-    ???
+    val grid = gridSetup(temperatures) subtract normals
+    (gl: GridLocation) => grid.getTemperature(grid.getIndex(gl.lat, gl.lon))
   }
 
+  private def gridSetup(temperatures: Iterable[(Location, Temperature)]): Grid = {
+    val grid = new Grid
+    grid.setupTemperatures(temperatures)
+  }
 
 }
 
